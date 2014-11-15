@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans" 
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:context="http://www.springframework.org/schema/context" 
+ xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+ http://www.springframework.org/schema/context 
+ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	
+	<context:annotation-config/> 
+	
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataLayerService" class="org.home.services.DataLayerServiceImpl"/>
+	<bean id="userDAO" class="org.home.dao.impl.UserDAOImpl"/>
+	<bean id="essenceDAO" class="org.home.dao.impl.EssenceDAOImpl"/>
+	<bean id="particularDAO" class="org.home.dao.impl.ParticularDAOImpl"/>
+	
+	
+	<!-- Initialization for data source -->
+   <bean id="dataSource"   class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://localhost:3306/words"/>
+      <property name="username" value="root"/>
+      <property name="password" value="admin"/>
+   </bean>
+
+   <!-- Definition for studentJDBCTemplate bean -->
+   <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+	
+	
+	<!--  
+	
+	CREATE SCHEMA `words` ;
+	
+	CREATE TABLE `words`.`users` (
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `name` VARCHAR(45) NULL,
+	  `group_id` INT NULL,
+  PRIMARY KEY (`id`));
+	
+	CREATE TABLE `words`.`groups` (
+	  `id` INT NOT NULL AUTO_INCREMENT,
+	  `name` VARCHAR(45) NULL,
+	  `role` INT NULL,
+  PRIMARY KEY (`id`));
+  
+  	insert into words.groups(name,role) values('Группа 1', 1);
+	insert into words.groups(name,role) values('Группа 2', 1);
+	
+	update words.groups t set t.name='Group 1', t.role=3 where t.id=1;
+
+	select t.id, t.name, t.role from words.groups t;
+	
+	
+	insert into words.users(name,group_id) values('Иванов',1);
+	insert into words.users(name,group_id) values('Петров',1);
+	insert into words.users(name,group_id) values('Сидоров',2);
+
+	select u.id,u.name,g.name as groupName from words.users u inner join words.groups g on u.group_id=g.id;
+	
+	-->
+	
+		
+</beans>
