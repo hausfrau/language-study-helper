@@ -1,4 +1,4 @@
-languageStudyHelper
+Language study helper
 ===================
 
-Language study delper
+backend: java, Springframework, REST API, mysql
